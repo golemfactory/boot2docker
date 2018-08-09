@@ -93,3 +93,6 @@ fi
 
 # Load Parallels Tools daemon
 /etc/rc.d/prltoolsd
+
+# Lanuch docker-volume-netshare plugin
+/etc/rc.d/docker-volume-netshare

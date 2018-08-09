@@ -379,6 +379,20 @@ RUN set -ex \
 	&& echo "${GIT_BRANCH} : ${GITSHA1} - ${DATE}" \
 		| tee "$ROOTFS/etc/boot2docker"
 
+# Install lsb-base (required by docker-volume-netshare daemon)
+
+RUN curl -fL -o /tmp/lsb-base.deb http://http.us.debian.org/debian/pool/main/l/lsb/lsb-base_9.20161125_all.deb && \
+    dpkg -x /tmp/lsb-base.deb "$ROOTFS"
+
+# Install docker-volume-netshare
+
+RUN curl -fL -o "$ROOTFS/usr/bin/docker-volume-netshare" \
+    https://github.com/ContainX/docker-volume-netshare/releases/download/v0.35/docker-volume-netshare_0.35_linux_amd64-bin && \
+    chmod +x "$ROOTFS/usr/bin/docker-volume-netshare"
+
+RUN echo 'DKV_NETSHARE_OPTS="cifs --dirMode=0755 --fileMode=0755 --security=ntlmsspi --options=vers=3.02"' \
+    > "$ROOTFS/etc/default/docker-volume-netshare"
+
 # Copy boot params
 COPY rootfs/isolinux /tmp/iso/boot/isolinux
 
