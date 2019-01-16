@@ -46,4 +46,6 @@ mkdir -p /tmp/stats
 	echo "- VirtualBox Guest Additions [v$VBOX_VERSION](https://download.virtualbox.org/virtualbox/$VBOX_VERSION/)"
 
 	echo "- XenServer Tools (\`xe-guest-utilities\`) [v$XEN_VERSION](https://github.com/xenserver/xe-guest-utilities/tree/v$XEN_VERSION)"
+
+	echo "- Netshare (\`docker-volume-netshare\`) [v$NETSHARE_VERSION](https://github.com/ContainX/docker-volume-netshare/releases/tag/v$NETSHARE_VERSION)"
 } | tee /tmp/stats/state.md

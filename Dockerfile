@@ -454,6 +454,24 @@ RUN DOCKER_CHANNEL='edge'; \
 		chroot . "$binary" --version; \
 	done
 
+ENV NETSHARE_VERSION 0.35
+
+# Install lsb-base (required by docker-volume-netshare daemon)
+RUN wget -O /lsb-base.deb http://http.us.debian.org/debian/pool/main/l/lsb/lsb-base_9.20161125_all.deb; \
+    dpkg -x /lsb-base.deb . ; \
+    rm /lsb-base.deb
+
+# Install docker-volume-netshare plugin
+RUN wget -O usr/local/sbin/docker-volume-netshare "https://github.com/ContainX/docker-volume-netshare/releases/download/v${NETSHARE_VERSION}/docker-volume-netshare_${NETSHARE_VERSION}_linux_amd64-bin"; \
+    chmod +x usr/local/sbin/docker-volume-netshare
+
+# Create configuration file for the plugin
+RUN mkdir --parents etc/default; \
+    { \
+        echo 'DKV_NETSHARE=/usr/local/sbin/docker-volume-netshare'; \
+        echo 'DKV_NETSHARE_OPTS="cifs --dirMode=0755 --fileMode=0755 --security=ntlmsspi --options=vers=3.02"'; \
+    } > etc/default/docker-volume-netshare
+
 # set up a few branding bits
 RUN { \
 		echo 'NAME=Boot2Docker'; \

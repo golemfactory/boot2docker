@@ -79,6 +79,8 @@ fi
 
 /etc/init.d/docker start
 
+/etc/init.d/docker-volume-netshare start
+
 if [ -e /var/lib/boot2docker/bootlocal.sh ]; then
 	sh /var/lib/boot2docker/bootlocal.sh &
 fi
