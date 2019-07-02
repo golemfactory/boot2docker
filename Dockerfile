@@ -469,7 +469,7 @@ RUN wget -O usr/local/sbin/docker-volume-netshare "https://github.com/ContainX/d
 RUN mkdir --parents etc/default; \
     { \
         echo 'DKV_NETSHARE=/usr/local/sbin/docker-volume-netshare'; \
-        echo 'DKV_NETSHARE_OPTS="cifs --dirMode=0755 --fileMode=0755 --security=ntlmsspi --options=vers=3.02"'; \
+        echo 'DKV_NETSHARE_OPTS="cifs --dirMode=0755 --fileMode=0755 --security=ntlmsspi --options=vers=3.02,nobrl"'; \
     } > etc/default/docker-volume-netshare
 
 # set up a few branding bits
